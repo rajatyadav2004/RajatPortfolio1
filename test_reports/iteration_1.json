@@ -1,0 +1,42 @@
+{
+  "summary": "First-finish smoke testing complete. All 5 backend endpoints pass. Frontend renders correctly: preloader -> hero, custom cursor (3 layers), floating nav (6 items), about+stats, work+project modal, stack+github contrib, timeline (7 nodes), contact form submits and persists in MongoDB, scroll progress grows, perf toggle switches FULL<->LIGHT. One real testability bug found: data-testid='contact-email' is incorrectly applied to the mailto <a> link in the contact-info column instead of (or in addition to) the email <input> in the form. The form itself works perfectly when targeted via placeholder/type=email selectors. Also availability-badge has no data-testid (visible text is shown).",
+  "tested_scope": ["frontend", "backend", "integration"],
+  "passed": [
+    "GET /api/ -> 200 {message: 'Rajat Portfolio API live'}",
+    "POST /api/contact valid payload -> 200 with id + ISO timestamp",
+    "POST /api/contact invalid email -> 422 validation error",
+    "GET /api/contact -> 200 list, newest first (verified Playwright submission appears at top)",
+    "GET /api/github/contributions?username=octocat -> 200 with username/total/contributions keys",
+    "Preloader completes, hero shows RAJAT name + 'Researcher' typewriter + both CTAs",
+    "Custom cursor present: cursor-dot, cursor-ring, cursor-spotlight",
+    "Floating nav visible with 6 items; nav-about / nav-work / nav-stack / nav-research / nav-contact all navigate",
+    "About stats count up after intersection (4 stat-* nodes; sample value '2+')",
+    "project-card-rag present, opens project-modal, close button works",
+    "Stack: 6 stack-group-* groups + github-contrib element renders",
+    "Timeline: 7 timeline-node-* entries",
+    "Contact form submit -> success toast 'Transmission received. I'll reply within 24h.' + fields reset + MongoDB row created",
+    "scroll-progress width grows on scroll (0 -> 745px)",
+    "perf-toggle switches label 'PERF · FULL' <-> 'PERF · LIGHT'"
+  ],
+  "failed": [
+    {
+      "area": "frontend/testability",
+      "issue": "data-testid='contact-email' is bound to the mailto <a> link in the left contact-info column (href='mailto:rajat.23cse@bmu.edu.in') instead of the form's email <input>. This causes any automated test trying to fill the form email field by data-testid to fail with 'Element is not an <input>...'. The form's email <input> appears to have no unique testid.",
+      "evidence": "page.fill('[data-testid=contact-email]') resolved to '<a data-testid=\"contact-email\" href=\"mailto:...\">'. Shape probe returned {tag:'A'} for contact-email but {tag:'INPUT'} for contact-name.",
+      "priority": "MEDIUM"
+    },
+    {
+      "area": "frontend/testability",
+      "issue": "availability-badge data-testid missing (text 'OPEN TO RESEARCH & ENGINEERING COLLABORATIONS · 2026' is visible in DOM but no element carries the testid).",
+      "evidence": "page.is_visible('[data-testid=availability-badge]') -> False, but text is rendered in hero edge label.",
+      "priority": "LOW"
+    }
+  ],
+  "action_items": [
+    "Rename the mailto link testid to 'contact-email-link' (or similar) and apply data-testid='contact-email' to the actual <input type=email> inside the form so automated tests can fill it.",
+    "Add data-testid='availability-badge' to the hero availability badge element."
+  ],
+  "success_rate": {"backend": "100%", "frontend": "~93% (15/16 checks; only the duplicated contact-email testid + missing availability-badge testid)"},
+  "retest_needed": false,
+  "full_testing_deferred": true
+}

@@ -1,0 +1,184 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap");
+
+:root {
+  --bg: #030308;
+  --bg-2: #07071a;
+  --cyan: #00fff0;
+  --violet: #6c00ff;
+  --text: #ffffff;
+  --muted: #8a8aa8;
+  --line: rgba(255, 255, 255, 0.08);
+}
+
+@layer base {
+  :root {
+    --background: 240 50% 3%;
+    --foreground: 0 0% 100%;
+    --card: 240 50% 5%;
+    --card-foreground: 0 0% 100%;
+    --popover: 240 50% 5%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 174 100% 50%;
+    --primary-foreground: 240 50% 3%;
+    --secondary: 264 100% 50%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 240 10% 15%;
+    --muted-foreground: 240 5% 65%;
+    --accent: 174 100% 50%;
+    --accent-foreground: 240 50% 3%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 240 10% 15%;
+    --input: 240 10% 12%;
+    --ring: 174 100% 50%;
+    --radius: 0.25rem;
+  }
+}
+
+* {
+  border-color: hsl(var(--border));
+}
+
+html, body, #root {
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Inter", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  margin: 0;
+  padding: 0;
+}
+
+html { scroll-behavior: auto; }
+body { overflow-x: hidden; cursor: none; }
+
+@media (max-width: 768px) {
+  body { cursor: auto; }
+  .cursor-dot, .cursor-ring, .cursor-spotlight { display: none !important; }
+}
+
+.font-display { font-family: "Space Grotesk", sans-serif; letter-spacing: -0.02em; }
+.font-mono { font-family: "JetBrains Mono", monospace; }
+
+/* --- Cursor --- */
+.cursor-dot {
+  position: fixed; top: 0; left: 0; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--cyan); pointer-events: none; z-index: 9999;
+  transform: translate(-50%, -50%); mix-blend-mode: difference;
+}
+.cursor-ring {
+  position: fixed; top: 0; left: 0; width: 38px; height: 38px; border-radius: 999px;
+  border: 1px solid rgba(0, 255, 240, 0.5); pointer-events: none; z-index: 9998;
+  transform: translate(-50%, -50%); transition: width .25s, height .25s, background .25s, border-radius .25s;
+  display: flex; align-items: center; justify-content: center; font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--bg); white-space: nowrap;
+}
+.cursor-ring.hover { width: 78px; height: 36px; border-radius: 999px; background: var(--cyan); border-color: var(--cyan); }
+.cursor-spotlight {
+  position: fixed; top: 0; left: 0; width: 600px; height: 600px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,255,240,0.10) 0%, rgba(0,255,240,0) 60%);
+  pointer-events: none; z-index: 1; transform: translate(-50%, -50%); mix-blend-mode: screen;
+}
+
+/* --- Selection --- */
+::selection { background: var(--cyan); color: var(--bg); }
+
+/* --- Scroll progress --- */
+.scroll-progress { position: fixed; top: 0; left: 0; height: 2px; background: var(--cyan); z-index: 9000; box-shadow: 0 0 10px var(--cyan); width: 0%; }
+
+/* --- Nav --- */
+.nav-glass {
+  background: rgba(8, 8, 20, 0.55); backdrop-filter: blur(18px) saturate(140%); -webkit-backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid var(--line); border-radius: 999px;
+}
+
+/* --- Grain --- */
+.grain::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0.06;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  mix-blend-mode: overlay; z-index: 2;
+}
+
+/* --- Hero --- */
+.hero-name {
+  font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: clamp(80px, 18vw, 320px);
+  line-height: 0.85; letter-spacing: -0.05em; text-transform: uppercase;
+  background: linear-gradient(180deg, #ffffff 0%, #ffffff 55%, rgba(255,255,255,0.25) 100%);
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  position: relative; display: inline-block;
+}
+.hero-name.glitch::before, .hero-name.glitch::after {
+  content: attr(data-text); position: absolute; top: 0; left: 0; width: 100%;
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+}
+.hero-name.glitch::before { color: var(--cyan); -webkit-text-fill-color: var(--cyan); transform: translate(-4px, 0); mix-blend-mode: screen; opacity: 0.8; }
+.hero-name.glitch::after { color: var(--violet); -webkit-text-fill-color: var(--violet); transform: translate(4px, 0); mix-blend-mode: screen; opacity: 0.8; }
+
+/* --- Pills / buttons --- */
+.pill {
+  display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border: 1px solid var(--line);
+  border-radius: 999px; font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em;
+}
+.dot-live { width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 12px var(--cyan); animation: pulse 1.6s ease-in-out infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1);} 50% { opacity: 0.4; transform: scale(0.7);} }
+
+.btn-magnetic {
+  position: relative; padding: 18px 32px; border: 1px solid var(--cyan); color: var(--cyan); background: transparent;
+  font-family: "JetBrains Mono", monospace; font-size: 13px; text-transform: uppercase; letter-spacing: 0.12em;
+  border-radius: 999px; overflow: hidden; cursor: none; transition: color .3s;
+}
+.btn-magnetic::before {
+  content: ""; position: absolute; inset: 0; background: var(--cyan); transform: translateY(100%); transition: transform .35s cubic-bezier(.22,.8,.36,1);
+}
+.btn-magnetic:hover { color: var(--bg); }
+.btn-magnetic:hover::before { transform: translateY(0); }
+.btn-magnetic > span { position: relative; z-index: 1; }
+
+.btn-ghost {
+  padding: 18px 32px; border: 1px solid var(--line); color: var(--text); border-radius: 999px;
+  font-family: "JetBrains Mono", monospace; font-size: 13px; text-transform: uppercase; letter-spacing: 0.12em; background: transparent;
+}
+
+/* --- Cards --- */
+.glass-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+  border: 1px solid var(--line); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border-radius: 20px;
+}
+
+.project-card {
+  position: relative; flex: 0 0 78vw; max-width: 980px; height: 70vh; border-radius: 24px; overflow: hidden;
+  border: 1px solid var(--line); background: linear-gradient(180deg, rgba(108,0,255,0.08), rgba(0,255,240,0.03));
+}
+
+.tech-pill { padding: 6px 12px; border: 1px solid rgba(0,255,240,0.4); color: var(--cyan); font-family: "JetBrains Mono", monospace; font-size: 11px; border-radius: 999px; }
+
+/* edge labels */
+.edge-label { position: fixed; font-family: "JetBrains Mono", monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.2em; text-transform: uppercase; z-index: 50; }
+
+/* matrix rain */
+.matrix-overlay { position: fixed; inset: 0; z-index: 9500; pointer-events: none; }
+
+/* inputs */
+.field { background: rgba(255,255,255,0.03); border: 1px solid var(--line); border-radius: 12px; padding: 14px 18px; color: var(--text); width: 100%; font-family: "Inter", sans-serif; outline: none; transition: border .25s, background .25s; }
+.field:focus { border-color: var(--cyan); background: rgba(0,255,240,0.04); }
+.field-label { font-family: "JetBrains Mono", monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.2em; text-transform: uppercase; }
+
+/* scroll snap horizontal */
+.h-scroll { display: flex; gap: 32px; }
+
+/* timeline */
+.timeline-node { width: 14px; height: 14px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 24px var(--cyan); }
+
+/* perf toggle */
+.perf-toggle { position: fixed; bottom: 24px; left: 24px; z-index: 1000; }
+
+/* utility */
+.no-cursor, .no-cursor * { cursor: none !important; }
+.divider { width: 1px; height: 40px; background: var(--line); }
+
+/* hide scrollbar where needed */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
