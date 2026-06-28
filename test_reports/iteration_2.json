@@ -1,0 +1,42 @@
+{
+  "summary": "Targeted regression: verified two CSS/layout overlap fixes on Rajat portfolio at desktop 1920x800. Both bugs are FIXED.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_results": {
+    "bug_fix_1_hero_perf_toggle_vs_coords": {
+      "status": "PASS",
+      "perf_toggle_bbox": {"x": 1769.31, "y": 745.5, "width": 126.69, "height": 30.5},
+      "right_distance_from_viewport": "24px (< 200px required)",
+      "coords_label_bbox": {"x": 24, "y": 761, "width": 184, "height": 15},
+      "overlap": false,
+      "notes": "perf-toggle moved to bottom-right (right:24, bottom:24). coords label remains at bottom-left and is visible. No horizontal or vertical overlap."
+    },
+    "bug_fix_2_about_stats_grid_overlap": {
+      "status": "PASS",
+      "boxes": {
+        "stat-Shipped-projects": {"x": 1167, "y": 376, "width": 224.5, "height": 48},
+        "stat-Best-mAP": {"x": 1452.5, "y": 376, "width": 224.5, "height": 48},
+        "stat-Runtime-gain": {"x": 1167, "y": 471, "width": 224.5, "height": 48},
+        "stat-Workshops-led": {"x": 1452.5, "y": 471, "width": 224.5, "height": 48}
+      },
+      "left_column_max_right_x": 1391.5,
+      "right_column_min_left_x": 1452.5,
+      "horizontal_gap_px": 61.0,
+      "pairwise_overlap_detected": false,
+      "notes": "4 stat tiles arranged in 2x2 grid with no horizontal/vertical overlap. Constraint max(right of left col) <= min(left of right col) satisfied (1391.5 <= 1452.5)."
+    }
+  },
+  "test_report_links": [],
+  "action_items": [],
+  "critical_code_review_comments": [],
+  "updated_files": [],
+  "success_rate": {"backend": "n/a (not tested)", "frontend": "100% (2/2 targeted checks pass)"},
+  "seed_data_creation": "none",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Hero perf-toggle now positioned bottom-right (right:24, bottom:24) and About stats grid is 2x2 with ~61px horizontal gap. Both regressions verified at 1920x800. Preloader ~2s. Note: at this viewport the nav-about click scrolls but About section's stat tiles are at y=376 (top of viewport range after scroll). Confirmed via getBoundingClientRect."
+}

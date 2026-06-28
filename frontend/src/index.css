@@ -173,7 +173,7 @@ body { overflow-x: hidden; cursor: none; }
 .timeline-node { width: 14px; height: 14px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 24px var(--cyan); }
 
 /* perf toggle */
-.perf-toggle { position: fixed; bottom: 24px; left: 24px; z-index: 1000; }
+.perf-toggle { position: fixed; bottom: 24px; right: 24px; z-index: 1000; }
 
 /* utility */
 .no-cursor, .no-cursor * { cursor: none !important; }

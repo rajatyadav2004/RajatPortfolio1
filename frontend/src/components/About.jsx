@@ -19,8 +19,8 @@ const useCountUp = (target, active) => {
 function Stat({ value, label, suffix, active }) {
   const v = useCountUp(value, active);
   return (
-    <div className="border-l border-[var(--line)] pl-5">
-      <div className="font-display text-5xl md:text-6xl text-white tabular-nums" data-testid={`stat-${label.replace(/\s/g,'-')}`}>{v}<span className="text-[var(--cyan)]">{suffix}</span></div>
+    <div className="border-l border-[var(--line)] pl-5 min-w-0">
+      <div className="font-display text-4xl md:text-5xl text-white tabular-nums whitespace-nowrap" data-testid={`stat-${label.replace(/\s/g,'-')}`}>{v}<span className="text-[var(--cyan)] ml-0.5">{suffix}</span></div>
       <div className="font-mono text-[10px] text-[var(--muted)] tracking-[0.2em] uppercase mt-2">{label}</div>
     </div>
   );
@@ -75,7 +75,7 @@ export default function About() {
               </div>
               <div className="absolute bottom-3 left-3 font-mono text-[10px] text-white/70 tracking-[0.2em]">RAJAT · BMU '27</div>
             </div>
-            <div className="grid grid-cols-2 gap-6 mt-2">
+            <div className="grid grid-cols-2 gap-x-10 gap-y-6 mt-2">
               {STATS.map((s) => <Stat key={s.label} {...s} active={vis} />)}
             </div>
           </div>

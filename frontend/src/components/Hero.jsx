@@ -56,7 +56,7 @@ export default function Hero({ lowPerf }) {
         <span className="pill"><span className="dot-live" />{PROFILE.availability}</span>
       </span>
       <span className="edge-label" style={{ bottom: 24, left: 24 }}>{PROFILE.coords}</span>
-      <span className="edge-label" style={{ bottom: 24, right: 24 }}>SCROLL ↓ TO EXPLORE</span>
+      <span className="edge-label" style={{ bottom: 24, right: 200 }}>SCROLL ↓ TO EXPLORE</span>
       <span className="edge-label" style={{ top: 90, right: 24 }}>SECTION · 01 / HOME</span>
 
       <div className="relative z-10 w-full px-6 md:px-16 max-w-[1600px] mx-auto">
