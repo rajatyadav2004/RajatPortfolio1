@@ -94,6 +94,18 @@ export const PROJECTS = [
     github: "https://github.com/rajatyadav2004",
     demo: "#",
   },
+  {
+    id: "wallpaper-ocean",
+    title: "Wallpaper Ocean",
+    subtitle: "Full-stack wallpaper gallery · React + Vite",
+    year: "2024",
+    tags: ["React", "TypeScript", "Vite", "Tailwind", "Wouter"],
+    blurb:
+      "A free, fast wallpaper gallery with category browsing, lightbox viewer, favorites, and one-click downloads. Deployed on Vercel with responsive design across mobile, tablet and desktop.",
+    color: "#00FFF0",
+    github: "https://github.com/rajatyadav2004/wallpaper-ocean",
+    demo: "https://wallpaper-ocean.vercel.app/wallpaper-ocean/",
+  },
 ];
 
 export const STACK = {
