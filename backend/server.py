@@ -2,7 +2,7 @@ from fastapi import FastAPI, APIRouter, HTTPException
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
-import os, logging, uuid, httpx
+import os, logging, uuid, httpx, asyncio, resend
 from pathlib import Path
 from pydantic import BaseModel, Field, EmailStr, ConfigDict
 from typing import List, Optional
@@ -14,6 +14,10 @@ load_dotenv(ROOT_DIR / '.env')
 mongo_url = os.environ['MONGO_URL']
 client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ['DB_NAME']]
+
+resend.api_key = os.environ.get('RESEND_API_KEY', '')
+SENDER_EMAIL = os.environ.get('SENDER_EMAIL', 'onboarding@resend.dev')
+OWNER_EMAIL = os.environ.get('OWNER_EMAIL', '')
 
 app = FastAPI()
 api_router = APIRouter(prefix="/api")
@@ -45,6 +49,33 @@ async def create_contact(payload: ContactCreate):
     doc = obj.model_dump()
     doc['timestamp'] = doc['timestamp'].isoformat()
     await db.contacts.insert_one(doc)
+
+    # Fire-and-forget email notification via Resend (non-blocking on failure)
+    if resend.api_key and OWNER_EMAIL:
+        html = f"""
+        <div style=\"font-family: -apple-system, Segoe UI, Roboto, sans-serif; background:#030308; color:#fff; padding:32px; border-radius:16px;\">
+          <div style=\"font-family: 'JetBrains Mono', monospace; font-size:11px; color:#00FFF0; letter-spacing:0.2em; margin-bottom:16px;\">// NEW TRANSMISSION · RAJAT PORTFOLIO</div>
+          <h2 style=\"font-size:24px; margin:0 0 16px; color:#fff;\">{obj.name} just reached out</h2>
+          <table style=\"width:100%; border-collapse:collapse; margin-bottom:20px;\">
+            <tr><td style=\"padding:6px 0; color:#8a8aa8; font-size:12px; width:90px;\">From</td><td style=\"color:#fff;\">{obj.name} &lt;{obj.email}&gt;</td></tr>
+            <tr><td style=\"padding:6px 0; color:#8a8aa8; font-size:12px;\">At</td><td style=\"color:#fff;\">{doc['timestamp']}</td></tr>
+            <tr><td style=\"padding:6px 0; color:#8a8aa8; font-size:12px;\">ID</td><td style=\"color:#fff;\">{obj.id}</td></tr>
+          </table>
+          <div style=\"background:rgba(0,255,240,0.05); border-left:2px solid #00FFF0; padding:16px 20px; white-space:pre-wrap; line-height:1.6; color:#fff;\">{obj.message}</div>
+          <div style=\"margin-top:24px; font-size:11px; color:#8a8aa8; font-family: monospace;\">Reply directly to <a href=\"mailto:{obj.email}\" style=\"color:#00FFF0;\">{obj.email}</a></div>
+        </div>
+        """
+        try:
+            await asyncio.to_thread(resend.Emails.send, {
+                "from": f"Rajat Portfolio <{SENDER_EMAIL}>",
+                "to": [OWNER_EMAIL],
+                "reply_to": obj.email,
+                "subject": f"New transmission from {obj.name}",
+                "html": html,
+            })
+        except Exception as e:
+            logging.warning(f"resend send failed: {e}")
+
     return obj
 
 
