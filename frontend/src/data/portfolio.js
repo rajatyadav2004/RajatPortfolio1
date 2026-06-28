@@ -98,7 +98,7 @@ export const PROJECTS = [
     id: "wallpaper-ocean",
     title: "Wallpaper Ocean",
     subtitle: "Full-stack wallpaper gallery · React + Vite",
-    year: "2024",
+    year: "2023",
     tags: ["React", "TypeScript", "Vite", "Tailwind", "Wouter"],
     blurb:
       "A free, fast wallpaper gallery with category browsing, lightbox viewer, favorites, and one-click downloads. Deployed on Vercel with responsive design across mobile, tablet and desktop.",
