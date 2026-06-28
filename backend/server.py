@@ -20,6 +20,15 @@ SENDER_EMAIL = os.environ.get('SENDER_EMAIL', 'onboarding@resend.dev')
 OWNER_EMAIL = os.environ.get('OWNER_EMAIL', '')
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_credentials=True,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 api_router = APIRouter(prefix="/api")
 
 
@@ -50,7 +59,6 @@ async def create_contact(payload: ContactCreate):
     doc['timestamp'] = doc['timestamp'].isoformat()
     await db.contacts.insert_one(doc)
 
-    # Fire-and-forget email notification via Resend (non-blocking on failure)
     if resend.api_key and OWNER_EMAIL:
         html = f"""
         <div style=\"font-family: -apple-system, Segoe UI, Roboto, sans-serif; background:#030308; color:#fff; padding:32px; border-radius:16px;\">
@@ -90,8 +98,6 @@ async def list_contacts():
 
 @api_router.get("/github/contributions")
 async def github_contributions(username: str = "rajat-cse"):
-    """Fetch public contribution data via the unofficial JSON endpoint.
-    Falls back to a synthetic 52-week pattern if the API is unreachable."""
     try:
         async with httpx.AsyncClient(timeout=6.0) as hc:
             r = await hc.get(f"https://github-contributions-api.jogruber.de/v4/{username}?y=last")
@@ -100,7 +106,6 @@ async def github_contributions(username: str = "rajat-cse"):
                 return {"username": username, "total": data.get("total", {}), "contributions": data.get("contributions", [])}
     except Exception as e:
         logging.warning(f"github fetch failed: {e}")
-    # synthetic fallback — 365 days
     import random
     random.seed(42)
     days = []
@@ -110,14 +115,6 @@ async def github_contributions(username: str = "rajat-cse"):
 
 
 app.include_router(api_router)
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_credentials=True,
-    allow_origins=os.environ.get('CORS_ORIGINS', '*').split(','),
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
