@@ -6,7 +6,7 @@ export const PROFILE = {
   tagline: "Engineering intelligence at the edge of language, vision and the web.",
   location: "New Delhi · India",
   coords: "28.6139° N · 77.2090° E",
-  email: "rajat.23cse@bmu.edu.in",
+  email: "rajatyadav5492@gmail.com",
   phone: "+91 9588 770 587",
   github: "rajatyadav2004",
   linkedin: "rajat-bmu",
