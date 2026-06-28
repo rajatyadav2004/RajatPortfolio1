@@ -108,7 +108,7 @@ export default function Contact({ lowPerf }) {
             <div className="space-y-3">
               <div className="font-mono text-[10px] text-[var(--muted)] tracking-[0.3em]">SOCIAL</div>
               <div className="flex flex-wrap gap-3">
-                <a data-cursor="OPEN" data-testid="social-github" href="https://github.com/rajat-yadav" target="_blank" rel="noreferrer" className="btn-ghost text-xs">GitHub ↗</a>
+                <a data-cursor="OPEN" data-testid="social-github" href="https://github.com/rajatyadav2004" target="_blank" rel="noreferrer" className="btn-ghost text-xs">GitHub ↗</a>
                 <a data-cursor="OPEN" data-testid="social-linkedin" href="https://www.linkedin.com/in/rajat-yadav-445a773b2" target="_blank" rel="noreferrer" className="btn-ghost text-xs">LinkedIn ↗</a>
                 <a data-cursor="CALL" data-testid="social-phone" href={`tel:${PROFILE.phone.replace(/\s/g, '')}`} className="btn-ghost text-xs">{PROFILE.phone} ↗</a>
               </div>

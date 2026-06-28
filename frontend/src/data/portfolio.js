@@ -8,7 +8,7 @@ export const PROFILE = {
   coords: "28.6139° N · 77.2090° E",
   email: "rajat.23cse@bmu.edu.in",
   phone: "+91 9588 770 587",
-  github: "rajat-cse",
+  github: "rajatyadav2004",
   linkedin: "rajat-bmu",
   availability: "Open to research & engineering collaborations · 2026",
   bio: "B.Tech (CSE — AI / DSA) at BML Munjal University, class of 2027. I build hallucination-aware RAG systems, fine-tune LLMs with PEFT/LoRA, ship full-stack experiences, and prototype IoT × ML hybrids. Currently writing my thesis on Marathi Word Sense Disambiguation under Prof. Satyender.",
@@ -31,7 +31,7 @@ export const PROJECTS = [
     blurb:
       "End-to-end retrieval system with calibrated confidence scoring and dynamic vector ingestion. Fine-tuned GPT-2 on a curated CS Q&A set — lifted BLEU from 0.03 → 0.09 and ROUGE-L by 38%.",
     color: "#00FFF0",
-    github: "https://github.com/",
+    github: "https://github.com/rajatyadav2004",
     demo: "#",
   },
   {
@@ -43,7 +43,7 @@ export const PROJECTS = [
     blurb:
       "Disambiguating polysemous Marathi tokens with custom preprocessing pipelines, contextual embeddings and classical ML baselines — supervised by Prof. Satyender.",
     color: "#6C00FF",
-    github: "https://github.com/",
+    github: "https://github.com/rajatyadav2004",
     demo: "#",
   },
   {
@@ -55,7 +55,7 @@ export const PROJECTS = [
     blurb:
       "Mined 10,000+ Indian vehicle registration records — exposed regional fuel-type migration trends and a 25% runtime gain on the data pipeline.",
     color: "#00FFF0",
-    github: "https://github.com/",
+    github: "https://github.com/rajatyadav2004",
     demo: "#",
   },
   {
@@ -67,7 +67,7 @@ export const PROJECTS = [
     blurb:
       "ESP32-powered hydration sensor streaming to Firebase with an Android companion app — push reminders, analytics dashboards, family sharing.",
     color: "#6C00FF",
-    github: "https://github.com/",
+    github: "https://github.com/rajatyadav2004",
     demo: "#",
   },
   {
@@ -79,7 +79,7 @@ export const PROJECTS = [
     blurb:
       "Lets citizens file geo-tagged complaints with photo evidence; routes to municipal officers with live status tracking, dark mode and profiles.",
     color: "#00FFF0",
-    github: "https://github.com/",
+    github: "https://github.com/rajatyadav2004",
     demo: "#",
   },
   {
@@ -91,7 +91,7 @@ export const PROJECTS = [
     blurb:
       "A zero-leak digital vault for sensitive documents with quick-access auth and end-to-end confidentiality.",
     color: "#6C00FF",
-    github: "https://github.com/",
+    github: "https://github.com/rajatyadav2004",
     demo: "#",
   },
 ];

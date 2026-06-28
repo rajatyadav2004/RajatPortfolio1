@@ -7,7 +7,7 @@ export default function StackGlobe({ lowPerf }) {
   const [contrib, setContrib] = useState(null);
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_BACKEND_URL}/api/github/contributions?username=rajat-cse`)
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/api/github/contributions?username=rajatyadav2004`)
       .then(r => r.json()).then(setContrib).catch(() => {});
   }, []);
 
