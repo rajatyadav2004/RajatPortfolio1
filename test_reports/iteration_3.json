@@ -1,0 +1,54 @@
+{
+  "summary": "Verified social link new-tab popup fix on Rajat portfolio. All 4 targeted checks PASS: LinkedIn, GitHub (Contact), Phone href, and Project modal GitHub link. Clicking the social anchors triggers window.open with a popup containing the correct URL while the original portfolio page remains unchanged (URL + scrollY identical before/after). Modal also remains open after clicking modal-github-link.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_results": {
+    "linkedin_social": {
+      "selector": "[data-testid=social-linkedin]",
+      "status": "PASS",
+      "popup_url": "https://www.linkedin.com/in/rajat-yadav-445a773b2",
+      "original_page_url_unchanged": true,
+      "original_scrollY_before": 10031,
+      "original_scrollY_after": 10031
+    },
+    "github_social": {
+      "selector": "[data-testid=social-github]",
+      "status": "PASS",
+      "popup_url": "https://github.com/rajatyadav2004",
+      "original_page_url_unchanged": true,
+      "original_scrollY_before": 10031,
+      "original_scrollY_after": 10031
+    },
+    "phone_href": {
+      "selector": "[data-testid=social-phone]",
+      "status": "PASS",
+      "href": "tel:+919588770587",
+      "notes": "Starts with tel:+919588770587 as required"
+    },
+    "modal_github_link": {
+      "selector": "[data-testid=modal-github-link] (opened via project-card-rag)",
+      "status": "PASS",
+      "popup_url": "https://github.com/rajatyadav2004",
+      "modal_still_visible_after_click": true,
+      "page_url_unchanged": true
+    }
+  },
+  "test_method": "Playwright context.expect_event('page') to capture new tab/popup; verified popup URL contains expected substring; verified main page url + scrollY identical before/after click; for modal, used JS click to bypass horizontal-scroll transform constraints, then captured popup and asserted modal remains visible.",
+  "test_report_links": [],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "Contact.jsx social anchors still keep href + target=_blank which is correct (graceful fallback) and onClick preventDefault+window.open ensures top-level popup even when site is embedded in an iframe — fix is correct and minimal.",
+    "Same correct pattern applied in Projects.jsx for modal-github-link and modal-demo-link.",
+    "Minor (non-blocking): three.js warning 'THREE.Clock has been deprecated, use THREE.Timer' appears 4x in console — cosmetic only."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "n/a (frontend-only request)", "frontend": "100% (4/4 checks pass)"},
+  "seed_data_creation": "none",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Preloader can be skipped by setting sessionStorage['rajat-seen']='1' before reload. Contact section is at scrollY≈10031 in 1920x1080 viewport. project-card-rag is in a horizontal-scroll strip — to open its modal reliably from any scroll position, call element.click() via page.evaluate rather than playwright .click() to bypass transform/visibility checks. Use context.expect_event('page') for popup capture (NOT current-page url assertion — the fix's purpose is that current page stays put while a new tab opens)."
+}

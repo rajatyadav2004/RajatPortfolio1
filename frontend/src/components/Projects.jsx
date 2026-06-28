@@ -91,8 +91,8 @@ export default function Projects() {
               {open.tags.map(t => <span key={t} className="tech-pill" style={{ borderColor: `${open.color}66`, color: open.color }}>{t}</span>)}
             </div>
             <div className="flex gap-4">
-              <a data-cursor="VIEW" data-testid="modal-github-link" href={open.github} target="_blank" rel="noreferrer" className="btn-ghost">GitHub ↗</a>
-              <a data-cursor="VIEW" data-testid="modal-demo-link" href={open.demo} target="_blank" rel="noreferrer" className="btn-magnetic"><span>Live Demo →</span></a>
+              <a data-cursor="VIEW" data-testid="modal-github-link" href={open.github} target="_blank" rel="noopener noreferrer" onClick={(e) => { e.preventDefault(); window.open(open.github, "_blank", "noopener,noreferrer"); }} className="btn-ghost">GitHub ↗</a>
+              <a data-cursor="VIEW" data-testid="modal-demo-link" href={open.demo} target="_blank" rel="noopener noreferrer" onClick={(e) => { e.preventDefault(); window.open(open.demo, "_blank", "noopener,noreferrer"); }} className="btn-magnetic"><span>Live Demo →</span></a>
             </div>
           </div>
         </div>
