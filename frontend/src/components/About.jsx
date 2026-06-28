@@ -69,11 +69,31 @@ export default function About() {
             </p>
           </div>
           <div className="md:col-span-5 glass-card p-8 relative">
-            <div className="aspect-square mb-6 rounded-xl overflow-hidden relative" style={{ background: "linear-gradient(135deg, rgba(0,255,240,0.15), rgba(108,0,255,0.18))" }}>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="font-display text-[180px] leading-none text-white/90">R</div>
+            <div className="aspect-square mb-6 rounded-xl overflow-hidden relative ring-1 ring-[var(--cyan)]/30" style={{ background: "linear-gradient(135deg, rgba(0,255,240,0.15), rgba(108,0,255,0.18))" }}>
+              <img
+                src="https://customer-assets.emergentagent.com/job_cosmic-dev-hub-2/artifacts/mcfc1w7p_RPjpeg.jpeg"
+                alt="Rajat — portrait"
+                data-testid="about-portrait"
+                className="absolute inset-0 w-full h-full object-cover"
+                style={{ filter: "grayscale(0.15) contrast(1.05) saturate(0.9) brightness(0.92)", mixBlendMode: "luminosity" }}
+              />
+              {/* duotone wash */}
+              <div className="absolute inset-0 mix-blend-color" style={{ background: "linear-gradient(135deg, rgba(0,255,240,0.35), rgba(108,0,255,0.55))" }} />
+              {/* vignette */}
+              <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse at 50% 30%, transparent 40%, rgba(3,3,8,0.55) 100%)" }} />
+              {/* grain */}
+              <div className="absolute inset-0 opacity-20 pointer-events-none" style={{ backgroundImage: "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>\")", mixBlendMode: "overlay" }} />
+              {/* scanlines accent */}
+              <div className="absolute inset-0 pointer-events-none" style={{ background: "repeating-linear-gradient(0deg, transparent 0 3px, rgba(0,255,240,0.04) 3px 4px)" }} />
+              {/* corner brackets */}
+              <span className="absolute top-3 left-3 w-5 h-5 border-l border-t border-[var(--cyan)]/70" />
+              <span className="absolute top-3 right-3 w-5 h-5 border-r border-t border-[var(--cyan)]/70" />
+              <span className="absolute bottom-3 left-3 w-5 h-5 border-l border-b border-[var(--cyan)]/70" />
+              <span className="absolute bottom-3 right-3 w-5 h-5 border-r border-b border-[var(--cyan)]/70" />
+              <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between font-mono text-[10px] text-white/85 tracking-[0.2em] pl-7">
+                <span>RAJAT · BMU '27</span>
+                <span className="text-[var(--cyan)] pr-7">● LIVE</span>
               </div>
-              <div className="absolute bottom-3 left-3 font-mono text-[10px] text-white/70 tracking-[0.2em]">RAJAT · BMU '27</div>
             </div>
             <div className="grid grid-cols-2 gap-x-10 gap-y-6 mt-2">
               {STATS.map((s) => <Stat key={s.label} {...s} active={vis} />)}
